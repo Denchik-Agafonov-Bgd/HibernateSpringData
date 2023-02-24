@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.agafonov.spring.library.dao.PersonDAO;
 import ru.agafonov.spring.library.models.Person;
+import ru.agafonov.spring.library.services.ItemService;
 import ru.agafonov.spring.library.services.PeopleService;
 import ru.agafonov.spring.library.util.PersonValidator;
 
@@ -19,14 +20,23 @@ public class PersonController {
     private final PeopleService peopleService;
     private final PersonValidator personValidator;
 
-    public PersonController(PeopleService peopleService, PersonValidator personValidator) {
+    private final ItemService itemService;
+
+    public PersonController(PeopleService peopleService, PersonValidator personValidator, ItemService itemService) {
         this.peopleService = peopleService;
         this.personValidator = personValidator;
+        this.itemService = itemService;
     }
 
     @GetMapping()
     public String index(Model model){
         model.addAttribute("people", peopleService.findAll());
+
+        itemService.findByItemName("Airpods");
+        itemService.findByOwner(peopleService.findAll().get(0));
+
+        peopleService.test();
+
         return "person/index";
     }
     @GetMapping("/new")

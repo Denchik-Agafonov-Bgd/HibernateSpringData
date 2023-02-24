@@ -1,0 +1,28 @@
+package ru.agafonov.spring.library.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ru.agafonov.spring.library.models.Item;
+import ru.agafonov.spring.library.models.Person;
+import ru.agafonov.spring.library.repositories.ItemsRepository;
+
+import java.util.List;
+
+@Service
+public class ItemService {
+
+    private final ItemsRepository itemsRepository;
+
+    @Autowired
+    public ItemService(ItemsRepository itemsRepository) {
+        this.itemsRepository = itemsRepository;
+    }
+
+    public List<Item> findByItemName(String itemName) {
+        return itemsRepository.findByItemName(itemName);
+    }
+
+    public List<Item> findByOwner(Person owner) {
+        return itemsRepository.findByOwner(owner);
+    }
+}
