@@ -2,6 +2,7 @@ package ru.agafonov.spring.library.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Person")
@@ -26,6 +27,9 @@ public class Person {
     @NotEmpty(message = "Поле не должно быть пустым")
     @Email
     private String email;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Item> items;
 
     public Person(){}
 
